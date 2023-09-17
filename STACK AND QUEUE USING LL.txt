@@ -1,0 +1,206 @@
+1. STACK USING LL
+
+#include <iostream>
+#include <cstdlib> // for malloc and free
+
+// Define a Node structure for the stack
+struct Node {
+    int data;
+    Node* next;
+};
+
+// Function to create a new node
+Node* createNode(int value) {
+    Node* newNode = (Node*)malloc(sizeof(Node));
+    newNode->data = value;
+    newNode->next = nullptr;
+    return newNode;
+}
+
+// Function to push a value onto the stack
+void push(Node*& top, int value) {
+    Node* newNode = createNode(value);
+    newNode->next = top;
+    top = newNode;
+}
+
+// Function to pop a value from the stack
+int pop(Node*& top) {
+    if (top == nullptr) {
+        std::cerr << "Stack is empty. Cannot pop." << std::endl;
+        return -1; // Return a sentinel value
+    }
+    
+    Node* temp = top;
+    int poppedValue = temp->data;
+    top = top->next;
+    free(temp);
+    return poppedValue;
+}
+
+// Function to check if the stack is empty
+bool isEmpty(Node* top) {
+    return top == nullptr;
+}
+
+// Function to display the stack
+void displayStack(Node* top) {
+    if (isEmpty(top)) {
+        std::cout << "Stack is empty." << std::endl;
+        return;
+    }
+    
+    Node* current = top;
+    while (current != nullptr) {
+        std::cout << current->data << " ";
+        current = current->next;
+    }
+    std::cout << std::endl;
+}
+
+int main() {
+    Node* top = nullptr;
+    
+    // Push values onto the stack
+    push(top, 10);
+    push(top, 20);
+    push(top, 30);
+    
+    std::cout << "Stack elements: ";
+    displayStack(top);  // Output: 30 20 10
+    
+    // Pop a value from the stack
+    int poppedValue = pop(top);
+    if (poppedValue != -1) {
+        std::cout << "Popped value: " << poppedValue << std::endl;  // Output: Popped value: 30
+    }
+    
+    std::cout << "Stack elements after pop: ";
+    displayStack(top);  // Output: 20 10
+    
+    // Check if the stack is empty
+    if (isEmpty(top)) {
+        std::cout << "Stack is empty." << std::endl;  // Output: Stack is empty.
+    } else {
+        std::cout << "Stack is not empty." << std::endl;
+    }
+    
+    return 0;
+}
+
+
+2. QUEUE USING LL
+
+#include <iostream>
+#include <cstdlib> // for malloc and free
+
+// Define a Node structure for the queue
+struct Node {
+    int data;
+    Node* next;
+};
+
+// Define a Queue structure
+struct Queue {
+    Node* front;
+    Node* rear;
+};
+
+// Function to create a new node
+Node* createNode(int value) {
+    Node* newNode = (Node*)malloc(sizeof(Node));
+    newNode->data = value;
+    newNode->next = nullptr;
+    return newNode;
+}
+
+// Function to initialize a queue
+Queue* createQueue() {
+    Queue* queue = (Queue*)malloc(sizeof(Queue));
+    queue->front = nullptr;
+    queue->rear = nullptr;
+    return queue;
+}
+
+// Function to enqueue (push) a value into the queue
+void enqueue(Queue* queue, int value) {
+    Node* newNode = createNode(value);
+    
+    if (queue->rear == nullptr) {
+        queue->front = newNode;
+        queue->rear = newNode;
+        return;
+    }
+    
+    queue->rear->next = newNode;
+    queue->rear = newNode;
+}
+
+// Function to dequeue (remove) a value from the queue
+int dequeue(Queue* queue) {
+    if (queue->front == nullptr) {
+        std::cerr << "Queue is empty. Cannot dequeue." << std::endl;
+        return -1; // Return a sentinel value
+    }
+    
+    Node* temp = queue->front;
+    int dequeuedValue = temp->data;
+    queue->front = queue->front->next;
+    
+    if (queue->front == nullptr) {
+        queue->rear = nullptr;
+    }
+    
+    free(temp);
+    return dequeuedValue;
+}
+
+// Function to check if the queue is empty
+bool isEmpty(Queue* queue) {
+    return queue->front == nullptr;
+}
+
+// Function to display the queue
+void displayQueue(Queue* queue) {
+    if (isEmpty(queue)) {
+        std::cout << "Queue is empty." << std::endl;
+        return;
+    }
+    
+    Node* current = queue->front;
+    while (current != nullptr) {
+        std::cout << current->data << " ";
+        current = current->next;
+    }
+    std::cout << std::endl;
+}
+
+int main() {
+    Queue* queue = createQueue();
+    
+    // Enqueue values into the queue
+    enqueue(queue, 10);
+    enqueue(queue, 20);
+    enqueue(queue, 30);
+    
+    std::cout << "Queue elements: ";
+    displayQueue(queue);  // Output: Queue elements: 10 20 30
+    
+    // Dequeue a value from the queue
+    int dequeuedValue = dequeue(queue);
+    if (dequeuedValue != -1) {
+        std::cout << "Dequeued value: " << dequeuedValue << std::endl;  // Output: Dequeued value: 10
+    }
+    
+    std::cout << "Queue elements after dequeue: ";
+    displayQueue(queue);  // Output: Queue elements after dequeue: 20 30
+    
+    // Check if the queue is empty
+    if (isEmpty(queue)) {
+        std::cout << "Queue is empty." << std::endl;  // Output: Queue is empty.
+    } else {
+        std::cout << "Queue is not empty." << std::endl;
+    }
+    
+    return 0;
+}
