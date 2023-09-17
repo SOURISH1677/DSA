@@ -124,7 +124,7 @@ void displayList(Node* head) {
     Node* current = head;
     while (current != nullptr) {
         std::cout << current->data << " ";
-        current = current->next;
+        current = current->next;// Each output comes on different line
     }
     std::cout << std::endl;
 }
