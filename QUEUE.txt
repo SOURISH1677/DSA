@@ -1,0 +1,171 @@
+1. QUEUE
+
+#include <iostream>
+
+using namespace std;
+
+const int MAX_SIZE = 100; // Maximum size of the queue
+
+class Queue {
+private:
+    int arr[MAX_SIZE];
+    int front, rear;
+
+public:
+    Queue() {
+        front = 0;
+        rear = -1;
+    }
+
+    // Function to insert an element into the queue
+    void enqueue(int value) {
+        if (rear == MAX_SIZE - 1) {
+            cout << "Queue is full. Cannot enqueue." << endl;
+        } else {
+            arr[++rear] = value;
+            cout << value << " enqueued to the queue." << endl;
+        }
+    }
+
+    // Function to remove an element from the queue
+    void dequeue() {
+        if (front > rear) {
+            cout << "Queue is empty. Cannot dequeue." << endl;
+        } else {
+            cout << arr[front++] << " dequeued from the queue." << endl;
+        }
+    }
+};
+
+int main() {
+    Queue q;
+
+    q.enqueue(10);
+    q.enqueue(20);
+    q.enqueue(30);
+
+    q.dequeue();
+    q.dequeue();
+    q.dequeue();
+
+    q.enqueue(40);
+
+    return 0;
+}
+
+
+2. CIRCULAR QUEUE
+
+#include <iostream>
+
+using namespace std;
+
+const int MAX_SIZE = 5; // Maximum size of the circular queue
+
+class CircularQueue {
+private:
+    int arr[MAX_SIZE];
+    int front, rear;
+
+public:
+    CircularQueue() {
+        front = rear = -1;
+    }
+
+    // Function to check if the queue is empty
+    bool isEmpty() {
+        return (front == -1 && rear == -1);
+    }
+
+    // Function to check if the queue is full
+    bool isFull() {
+        return ((rear + 1) % MAX_SIZE == front);
+    }
+
+    // Function to insert an element into the circular queue
+    void enqueue(int value) {
+        if (isFull()) {
+            cout << "Queue is full. Cannot enqueue." << endl;
+        } else if (isEmpty()) {
+            front = rear = 0;
+            arr[rear] = value;
+        } else {
+            rear = (rear + 1) % MAX_SIZE;
+            arr[rear] = value;
+        }
+        cout << value << " enqueued to the circular queue." << endl;
+    }
+
+    // Function to remove an element from the circular queue
+    void dequeue() {
+        if (isEmpty()) {
+            cout << "Queue is empty. Cannot dequeue." << endl;
+        } else if (front == rear) {
+            cout << arr[front] << " dequeued from the circular queue." << endl;
+            front = rear = -1;
+        } else {
+            cout << arr[front] << " dequeued from the circular queue." << endl;
+            front = (front + 1) % MAX_SIZE;
+        }
+    }
+};
+
+int main() {
+    CircularQueue cq;
+
+    cq.enqueue(10);
+    cq.enqueue(20);
+    cq.enqueue(30);
+
+    cq.dequeue();
+    cq.enqueue(40);
+    cq.enqueue(50);
+
+    cq.dequeue();
+    cq.dequeue();
+    cq.dequeue();
+
+    return 0;
+}
+
+
+3. DEQUE(DOUBLE ENDED QUEUE)
+
+#include <iostream>
+#include <deque>
+
+using namespace std;
+
+int main() {
+    deque<int> dq; // Creating a double-ended queue
+
+    // Inserting elements at the front
+    dq.push_front(10);
+    dq.push_front(20);
+
+    // Inserting elements at the back
+    dq.push_back(30);
+    dq.push_back(40);
+
+    cout << "Deque elements: ";
+    for (int x : dq) {
+        cout << x << " ";
+    }
+    cout << endl;
+
+    // Removing elements from the front and back
+    dq.pop_front();
+    dq.pop_back();
+
+    cout << "Deque elements after popping front and back: ";
+    for (int x : dq) {
+        cout << x << " ";
+    }
+    cout << endl;
+
+    // Accessing elements at the front and back
+    cout << "Front element: " << dq.front() << endl;
+    cout << "Back element: " << dq.back() << endl;
+
+    return 0;
+}
