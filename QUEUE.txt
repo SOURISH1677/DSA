@@ -137,7 +137,7 @@ int main() {
 using namespace std;
 
 int main() {
-    deque<int> dq; // Creating a double-ended queue
+    deque<int> dq; // Creating a double-ended queue with name "dq"
 
     // Inserting elements at the front
     dq.push_front(10);
