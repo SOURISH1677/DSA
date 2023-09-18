@@ -100,3 +100,31 @@ int main() {
     
     return 0;
 }
+
+
+
+
+
+Certainly! The `deleteNode` function is responsible for deleting a node with a specific value from a circular linked list. Let me explain it step by step:
+
+1. `if (head == nullptr)`: This condition checks if the linked list is empty (i.e., `head` is `nullptr`). If the list is empty, there's nothing to delete, so the function returns early without making any changes.
+
+2. `Node* current = head;` and `Node* prev = nullptr;`: These lines initialize two pointers, `current` and `prev`, to traverse the circular linked list. `current` starts at the `head` of the list, and `prev` is initially set to `nullptr`.
+
+3. `do { ... } while (current != head);`: This is a `do-while` loop that iterates through the circular linked list. The loop continues until `current` becomes equal to `head` again, indicating that we've completed one full iteration of the circular list.
+
+4. `if (current->data == value) { ... }`: Inside the loop, this condition checks if the data value of the current node (`current->data`) is equal to the target value (`value`). If a node with the desired value is found:
+
+   - `if (current == head) { ... }`: This part handles the case when the node to be deleted is the head of the circular linked list. In this case, it does the following:
+      - It finds the tail of the circular list by traversing it with a `while` loop until it reaches a node whose `next` pointer is equal to `head`. This `tail` node will be the one just before the head.
+      - It updates the `next` pointer of the `tail` node to skip the head node, effectively removing the head node from the circular list.
+      - Finally, it updates the `head` pointer to point to the next node in the circular list, effectively making the next node the new head.
+
+   - `else { ... }`: This part handles the case when the node to be deleted is not the head. In this case, it does the following:
+      - It updates the `next` pointer of the `prev` node to skip the current node, effectively removing the current node from the circular list.
+      
+   - After either of the above cases, it deletes the current node using the `delete` operator to free the memory associated with it.
+
+5. `std::cout << "Node with value " << value << " not found." << std::endl;`: If the loop completes without finding a node with the specified value, this line is executed to indicate that the value was not found in the list.
+
+In summary, the `deleteNode` function searches for a node with the specified value in a circular linked list and deletes it. It handles the special case when the node to be deleted is the head of the list and updates the head accordingly.
