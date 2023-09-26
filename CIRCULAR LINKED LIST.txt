@@ -28,8 +28,8 @@ void insertAtBeginning(Node*& head, int value) {
         while (current->next != head) {
             current = current->next;
         }
-        newNode->next = head;
         current->next = newNode;
+        newNode->next = head;
         head = newNode; // Update the head to the new node.
     }
 }
