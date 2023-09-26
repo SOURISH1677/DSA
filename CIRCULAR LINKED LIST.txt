@@ -19,23 +19,44 @@ void insertAtBeginning(Node*& head, int value) {
     Node* newNode = createNode(value);
     
     if (head == nullptr) {
-        newNode->next = newNode; // Point to itself for a single node
-        head = newNode;
+        // If the list is empty, make the new node point to itself.
+        newNode->next = newNode;
+        head = newNode; // Update the head to the new node.
     } else {
+        // If the list is not empty, find the last node and update pointers.
+        Node* current = head;
+        while (current->next != head) {
+            current = current->next;
+        }
+        newNode->next = head;
+        current->next = newNode;
+        head = newNode; // Update the head to the new node.
+    }
+}
+
+// Function to insert a new node at the end of the circular linked list
+void insertAtEnd(Node*& head, int value) {
+    Node* newNode = createNode(value);
+    
+    if (head == nullptr) {
+        // If the list is empty, make the new node point to itself.
+        newNode->next = newNode;
+        head = newNode; // Update the head to the new node.
+    } else {
+        // If the list is not empty, find the last node and update pointers.
         Node* current = head;
         while (current->next != head) {
             current = current->next;
         }
         current->next = newNode;
-        newNode->next = head;
-        head = newNode;
+        newNode->next = head; // Make the new node point to the head.
     }
 }
 
 // Function to delete a node with a specific value from the circular linked list
 void deleteNode(Node*& head, int value) {
     if (head == nullptr) {
-        return;
+        return; // Nothing to delete if the list is empty.
     }
     
     Node* current = head;
@@ -44,18 +65,20 @@ void deleteNode(Node*& head, int value) {
     do {
         if (current->data == value) {
             if (current == head) {
+                // If the node to be deleted is the head, update the head.
                 Node* tail = head;
                 while (tail->next != head) {
                     tail = tail->next;
                 }
                 tail->next = head->next;
-                head = head->next;
+                head = head->next; // Update the head.
             } else {
+                // If the node is not the head, update the previous node's next pointer.
                 prev->next = current->next;
             }
             
             delete current;
-            return;
+            return; // Node found and deleted.
         }
         
         prev = current;
@@ -92,11 +115,17 @@ int main() {
     std::cout << "Circular linked list: ";
     displayList(head);  // Output: Circular linked list: 20 10 30
     
+    // Insert at the end
+    insertAtEnd(head, 40);
+    
+    std::cout << "Circular linked list after insertion at end: ";
+    displayList(head);  // Output: Circular linked list after insertion at end: 20 10 30 40
+    
     // Delete node with value 10
     deleteNode(head, 10);
     
     std::cout << "Circular linked list after deletion: ";
-    displayList(head);  // Output: Circular linked list after deletion: 20 30
+    displayList(head);  // Output: Circular linked list after deletion: 20 30 40
     
     return 0;
 }
