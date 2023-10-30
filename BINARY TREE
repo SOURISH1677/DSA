@@ -1,0 +1,74 @@
+BINARY TREE
+
+#include <iostream>
+using namespace std;
+//A structure to create node
+struct Node {
+int data;
+struct Node* left;
+struct Node* right;
+// A constructor to the struct node
+// that inserts value in the data variable.
+Node(int value)
+{
+data = value;
+left = NULL;//Left child is initialized to NULL
+right = NULL;//Right child is initialized to NULL
+}
+};
+
+void preorder(struct Node* root)
+{
+    if(root==NULL)
+    {
+        return;
+    }
+    cout<<root->data<<" ";
+    preorder(root->left);
+    preorder(root->right);
+    
+}
+void postorder(struct Node*root)
+{
+    if(root==NULL)
+    {
+        return;
+    }
+    postorder(root->left);
+    postorder(root->right);
+    cout<<root->data<<" ";
+    
+}
+void inorder(struct Node*root)
+{
+  if(root==NULL)
+    {
+        return;
+    }
+     inorder(root->left);
+     cout<<root->data<<" ";
+     inorder(root->right);
+    
+}
+
+/*        1
+         / \
+        2   3
+       / \ / \ 
+      4  5 6  7
+      */
+int main()
+{
+    struct Node*root=new Node(1);
+    root->left=new Node(2);
+     root->right=new Node(3);
+      root->left->left=new Node(4);
+       root->left->right=new Node(5);
+        root->right->left=new Node(6); 
+         root->right->right=new Node(7);
+         
+         preorder(root);  // 1 2 4 5 3 6 7 
+         postorder(root); // 4 5 2 6 7 3 1
+         inorder(root);     // 4 2 5 1 6 3 7 
+         return 0;
+}
