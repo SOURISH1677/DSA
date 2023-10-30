@@ -1,0 +1,67 @@
+#include <iostream>
+
+// Define the structure for a binary tree node
+struct Node {
+    int data;
+    Node* left;
+    Node* right;
+    Node(int val) : data(val), left(nullptr), right(nullptr) {}
+};
+
+// Preorder traversal
+void preorderDFS(Node* root) {
+    if (root == nullptr) {
+        return;
+    }
+
+    std::cout << root->data << " ";
+    preorderDFS(root->left);
+    preorderDFS(root->right);
+}
+
+// Inorder traversal
+void inorderDFS(Node* root) {
+    if (root == nullptr) {
+        return;
+    }
+
+    inorderDFS(root->left);
+    std::cout << root->data << " ";
+    inorderDFS(root->right);
+}
+
+// Postorder traversal
+void postorderDFS(Node* root) {
+    if (root == nullptr) {
+        return;
+    }
+
+    postorderDFS(root->left);
+    postorderDFS(root->right);
+    std::cout << root->data << " ";
+}
+
+int main() {
+    // Create a sample binary tree
+    Node* root = new Node(1);
+    root->left = new Node(2);
+    root->right = new Node(3);
+    root->left->left = new Node(4);
+    root->left->right = new Node(5);
+    root->right->left = new Node(6);
+    root->right->right = new Node(7);
+
+    std::cout << "Preorder DFS: ";
+    preorderDFS(root);
+    std::cout << std::endl;
+
+    std::cout << "Inorder DFS: ";
+    inorderDFS(root);
+    std::cout << std::endl;
+
+    std::cout << "Postorder DFS: ";
+    postorderDFS(root);
+    std::cout << std::endl;
+
+    return 0;
+}
